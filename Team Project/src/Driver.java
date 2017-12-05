@@ -48,5 +48,13 @@ public class Driver {
 		 * 6. solve the problem for the graph, which would automatically display the results on the screen (NOTE: THERE MAY NOT BE A SOLUTION FOR A GIVEN GRAPH), and ask the user if the results should be saved to a text file (where the file name is input from the user)
 		 * 7. write the graph to a text file (where the file name is input from the user) displaying each vertex and its adjacency list 
 		 */
+		
+		Djikstra<String> test = new Djikstra<>();
+		test.addEdge("Quickly", "De Anza", 5);
+		test.addEdge("De Anza", "Apple", 7);
+		test.addEdge("Apple", "Valley fair", 20);
+		test.addEdge("Apple", "Quickly", 10);
+		test.showAdjTable();
+		
 	}
 }

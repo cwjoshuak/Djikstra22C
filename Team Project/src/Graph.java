@@ -12,8 +12,7 @@ interface Visitor<T>
 class Vertex<E>
 {
    public static final double INFINITY = Double.MAX_VALUE;
-   public HashMap<E, Pair<Vertex<E>, Double> > adjList
-      = new HashMap<E, Pair<Vertex<E>, Double> >();
+   public HashMap<E, Pair<Vertex<E>, Double> > adjList = new HashMap<E, Pair<Vertex<E>, Double> >();
    public E data;
    public boolean visited;
 

@@ -58,4 +58,6 @@ public class Djikstra<E> extends Graph<E> {
 	   {
 	      edgeHeap.clear();
 	   }
+	   
+	   // algorithms
 }
