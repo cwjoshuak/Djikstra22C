@@ -56,12 +56,10 @@ public class Kruskal<E> extends Graph<E>
    public ArrayList< Edge<E> > applyKruskal()
    {
       Iterator<Entry<E, Vertex<E>>> iter;
-      LinkedList< HashSet<Vertex<E>> > vertexSets
-          = new LinkedList< HashSet<Vertex<E>> >();
+      LinkedList< HashSet<Vertex<E>> > vertexSets = new LinkedList< HashSet<Vertex<E>> >();
       Iterator< HashSet<Vertex<E>> > fIter;
       HashMap<E, Vertex<E>> vertsInGraph;
-	  HashSet<Vertex<E>> singleton, vertSet,
-         vertSetSrc = null, vertSetDst = null;
+	  HashSet<Vertex<E>> singleton, vertSet, vertSetSrc = null, vertSetDst = null;
       Edge<E> smallestEdge;
       Vertex<E> src, dst, vert;
       ArrayList< Edge<E> > newEdges = new ArrayList< Edge<E> >();
