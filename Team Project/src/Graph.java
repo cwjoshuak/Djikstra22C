@@ -1,4 +1,4 @@
-
+import java.io.PrintWriter;
 import java.util.*;
 import java.util.Map.Entry;
 interface Visitor<T>
@@ -15,7 +15,20 @@ class Vertex<E>
    public HashMap<E, Pair<Vertex<E>, Double> > adjList = new HashMap<E, Pair<Vertex<E>, Double> >();
    public E data;
    public boolean visited;
-
+   public double distanceFromSrc;
+   
+   
+   public double getDistanceFromSrc()
+   {
+	   return distanceFromSrc;
+   }
+   public void setDistanceFromSrc(double d)
+   {
+	   distanceFromSrc = d;
+   }
+   
+   
+   
    public Vertex( E x )
    {
       data = x;
@@ -94,6 +107,16 @@ public class Graph<E>
    public Graph ()
    {
       vertexSet = new HashMap<E, Vertex<E> >();
+   }
+   public Graph(Scanner scanner)
+   {
+	   super();
+	   if(scanner == null)
+		   return;
+	   else
+	   {
+		   
+	   }
    }
 
    public void addEdge(E source, E dest, double cost)
@@ -254,6 +277,11 @@ public class Graph<E>
 	   return false;
    }
    
+   
+   public void printToFile(PrintWriter pw)
+   {
+	   
+   }
 // WRITE THE INSTANCE METHOD HERE TO
    //         WRITE THE GRAPH's vertices and its
    //         adjacency list TO A TEXT FILE (SUGGEST TO PASS AN
