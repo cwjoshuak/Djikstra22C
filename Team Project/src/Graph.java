@@ -111,12 +111,7 @@ public class Graph<E>
    public Graph(Scanner scanner)
    {
 	   super();
-	   if(scanner == null)
-		   return;
-	   else
-	   {
-		   
-	   }
+	   
    }
 
    public void addEdge(E source, E dest, double cost)
@@ -259,11 +254,35 @@ public class Graph<E>
 	   }
    } // end breadthFirstTraversalHelper
 
+
    public void depthFirstTraversalHelper(Vertex<E> startVertex, Visitor<E> visitor)
    {
         // YOU COMPLETE THIS (USE THE RECURSIVE ALGORITHM GIVEN FOR LESSON 11 EXERCISE)
+	   LinkedStack<Vertex<E>> vertexStack = new LinkedStack<>();
+	   E startData = startVertex.getData();
+	   
+	   startVertex.visit();
+	   visitor.visit(startData);
+	   vertexStack.push(startVertex);
+	   System.out.println("Visited: " + startVertex.getData().toString());
+	   
+	   Iterator<Map.Entry<E, Pair<Vertex<E>, Double>>> iter =
+			   startVertex.iterator();
+	   while (iter.hasNext() && !vertexStack.isEmpty())
+	   {
+		   Entry<E, Pair<Vertex<E>, Double>> nextEntry = iter.next();
+		   Vertex<E> neighborVertex = nextEntry.getValue().first;
+		   if( !neighborVertex.isVisited() )
+		   {
+			   depthFirstTraversalHelper(neighborVertex,visitor);
+		   }
+		   else
+		   {
+			   vertexStack.pop();
+			   return;
+		   }
+	   }
    }
-
 
    /** NEW METHODS **/
    public boolean removeEdge(E source, E dest, int cost)
@@ -277,15 +296,21 @@ public class Graph<E>
 	   return false;
    }
    
-   
-   public void printToFile(PrintWriter pw)
-   {
-	   
-   }
-// WRITE THE INSTANCE METHOD HERE TO
+
+   // WRITE THE INSTANCE METHOD HERE TO
    //         WRITE THE GRAPH's vertices and its
    //         adjacency list TO A TEXT FILE (SUGGEST TO PASS AN
    //        ALREADY OPEN PrintWriter TO THIS) !
+   public void printToFile(PrintWriter pw) {
+	   if(pw == null)
+		   return;
+	   Iterator<Entry<E,Vertex<E>>> iter = vertexSet.entrySet().iterator();
+	      while( iter.hasNext() )
+	      {
+	         (iter.next().getValue()).showAdjList();
+	      }
+	      pw.println();
+   }
 
 
 }

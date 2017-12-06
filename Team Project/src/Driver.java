@@ -49,16 +49,27 @@ public class Driver {
 		 * 7. write the graph to a text file (where the file name is input from the user) displaying each vertex and its adjacency list 
 		 */
 		
-		Graph<String> test;
+		Graph<String> graph = null;
 		Scanner s = openInputFile();
-		test = new Djikstra<>(s);
 		
+		graph = readFromFile(s, graph);
+		graph.showAdjTable();
 		
-		test.addEdge("Quickly", "De Anza", 5);
-		test.addEdge("De Anza", "Apple", 7);
-		test.addEdge("Apple", "Valley fair", 20);
-		test.addEdge("Apple", "Quickly", 10);
-		test.showAdjTable();
-		
+	}
+	
+	public static Djikstra<String> readFromFile(Scanner s, Graph<String> g)
+	{
+		if(s == null)
+			   return null;
+		   else
+		   {
+			   g = new Djikstra<String>();
+			   while(s.hasNextLine())
+			   {
+				   String arr[] = s.nextLine().split(",");
+				   g.addEdge(arr[0], arr[1], Double.valueOf(arr[2]));
+			   }
+			   return (Djikstra<String>)g;
+		   }
 	}
 }

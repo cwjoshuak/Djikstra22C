@@ -47,32 +47,24 @@ class Edge<E> implements Comparable< Edge<E> >
 }
 
 public class Djikstra<E> extends Graph<E> {
-	private PriorityQueue< Edge<E> > edgeHeap; // will add Edges from largest to smallest cost
+	//private PriorityQueue< Edge<E> > edgeHeap; // will add Edges from largest to smallest cost
+	
+	private Map<Vertex<E>, Double> solution;
 
 	   public Djikstra ()
 	   {
-	      edgeHeap = new PriorityQueue< Edge<E> >();
+	      //edgeHeap = new PriorityQueue< Edge<E> >();
 	   }
 	   
 	   public void clear()
 	   {
-	      edgeHeap.clear();
+	     // edgeHeap.clear();
 	   }
 	   
 	   // algorithms
 	   public void applyDjikstra(Vertex<E> src, Vertex<E> dst)
 	   {
-		   /*
 		   
-	       
-		   Iterator< HashSet<Vertex<E>> > fIter;
-		   
-		   HashSet<Vertex<E>> singleton, vertSet, vertSetSrc = null, vertSetDst = null;
-		   Edge<E> smallestEdge;
-		   
-		   ArrayList< Edge<E> > neighbours = new ArrayList< Edge<E> >();
-		   , numVertsFound;
-		   */
 		   Iterator<Entry<E, Vertex<E>>> iter;
 		   int k;
 		   Vertex<E> vert;
@@ -151,4 +143,3 @@ public class Djikstra<E> extends Graph<E> {
 	      }
 	   }
 	   
-}
