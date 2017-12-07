@@ -59,6 +59,9 @@ public class Driver {
 		
 		graph.showAdjTable();
 		System.out.println(graph.getSolution(new Vertex<String>("UCR")));
+		
+		System.out.println(graph.getEdgeCost("UCD", "UCLA"));
+		
 	}
 	
 	public static Djikstra<String> readFromFile(Scanner s, Djikstra<String> g)

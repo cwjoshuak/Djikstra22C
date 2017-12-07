@@ -27,8 +27,6 @@ class Vertex<E>
 	   distanceFromSrc = d;
    }
    
-   
-   
    public Vertex( E x )
    {
       data = x;
@@ -298,6 +296,23 @@ public class Graph<E>
 	      }
 	      pw.println();
    }
+   public double getEdgeCost(E src, E dst)
+   {
+	   Vertex<E> vert = vertexSet.get(src);
+	   Iterator<Entry<E, Pair<Vertex<E>, Double>>> iter ;
+	      Entry<E, Pair<Vertex<E>, Double>> entry;
+	      Pair<Vertex<E>, Double> pair;
 
+	      iter = vert.adjList.entrySet().iterator();
+	      while( iter.hasNext() )
+	      {
+	         entry = iter.next();
+	         pair = entry.getValue();
+	         System.out.println(pair.first.data);
+	         if(pair.first.data.equals(dst))
+	        	 return pair.second;
+	      }
+	    return -1;
+   }
 
 }
