@@ -49,15 +49,44 @@ public class Driver {
 		 * 7. write the graph to a text file (where the file name is input from the user) displaying each vertex and its adjacency list 
 		 */
 		
-		Graph<String> graph = null;
+		Djikstra<String> graph = null;
 		Scanner s = openInputFile();
 		
 		graph = readFromFile(s, graph);
 		graph.showAdjTable();
 		
+		graph.applyDjikstra(new Vertex<String>("UCD") , new Vertex<String>("UCB"));
+		
+		/*
+		Current: UCLA	distance to source: 6.0
+        Current: UCB	distance to source: 1.0
+        Current: UCR	distance to source: 8.0
+        Current: UCD	distance to source: 0.0
+        Current: UCSD	distance to source: 9.0
+        Current: UCSC	distance to source: 3.0
+        Current: UCSB	distance to source: 12.0
+        Current: UCI	distance to source: 7.0
+        Current: UCM	distance to source: 3.0
+		 */
+		
+		graph.applyDjikstra(new Vertex<String>("UCI") , new Vertex<String>("UCB"));
+		/*
+		Current: UCLA 	distance to source: 7.0
+        Current: UCB 	distance to source: 0.0
+        Current: UCR	distance to source: 9.0
+        Current: UCD	distance to source: 1.0
+        Current: UCSD	distance to source: 10.0
+        Current: UCSC	distance to source: 2.0
+        Current: UCSB	distance to source: 7.0
+        Current: UCI	distance to source: 8.0
+        Current: UCM	distance to source: 4.0
+		 */
+		
+		
+		graph.applyDjikstra(new Vertex<String>("A building") , new Vertex<String>("UCB"));
 	}
 	
-	public static Djikstra<String> readFromFile(Scanner s, Graph<String> g)
+	public static Djikstra<String> readFromFile(Scanner s, Djikstra<String> g)
 	{
 		if(s == null)
 			   return null;
