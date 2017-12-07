@@ -283,18 +283,6 @@ public class Graph<E>
 	   }
    }
 
-   /** NEW METHODS **/
-   public boolean removeEdge(E source, E dest, int cost)
-   {
-	   return removeEdge(source, dest, (double)cost);
-   }
-   
-   
-   public boolean removeEdge(E source, E dest, double cost)
-   {
-	   return false;
-   }
-   
 
    // WRITE THE INSTANCE METHOD HERE TO
    //         WRITE THE GRAPH's vertices and its

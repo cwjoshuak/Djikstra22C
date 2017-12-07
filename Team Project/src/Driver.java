@@ -55,35 +55,10 @@ public class Driver {
 		graph = readFromFile(s, graph);
 		graph.showAdjTable();
 		
-		graph.applyDjikstra(new Vertex<String>("UCD") , new Vertex<String>("UCB"));
+		graph.applyDjikstra(new Vertex<String>("UCD"));
 		
-		/*
-		Current: UCLA	distance to source: 6.0
-        Current: UCB	distance to source: 1.0
-        Current: UCR	distance to source: 8.0
-        Current: UCD	distance to source: 0.0
-        Current: UCSD	distance to source: 9.0
-        Current: UCSC	distance to source: 3.0
-        Current: UCSB	distance to source: 12.0
-        Current: UCI	distance to source: 7.0
-        Current: UCM	distance to source: 3.0
-		 */
-		
-		graph.applyDjikstra(new Vertex<String>("UCI") , new Vertex<String>("UCB"));
-		/*
-		Current: UCLA 	distance to source: 7.0
-        Current: UCB 	distance to source: 0.0
-        Current: UCR	distance to source: 9.0
-        Current: UCD	distance to source: 1.0
-        Current: UCSD	distance to source: 10.0
-        Current: UCSC	distance to source: 2.0
-        Current: UCSB	distance to source: 7.0
-        Current: UCI	distance to source: 8.0
-        Current: UCM	distance to source: 4.0
-		 */
-		
-		
-		graph.applyDjikstra(new Vertex<String>("A building") , new Vertex<String>("UCB"));
+		graph.showAdjTable();
+		System.out.println(graph.getSolution(new Vertex<String>("UCR")));
 	}
 	
 	public static Djikstra<String> readFromFile(Scanner s, Djikstra<String> g)
