@@ -62,12 +62,13 @@ public class Djikstra<E> extends Graph<E> {
 	   public String getSolution(Vertex<E> dst)
 	   {
 		   StringBuilder sb = new StringBuilder("");
-		   Vertex<E> temp = dst;
-		   LinkedStack<Vertex<E>> stack = new LinkedStack<>();
 		   if(dst == null)
 			   return sb.toString();
+		   Vertex<E> temp = vertexSet.get(dst.data);
+		   LinkedStack<Vertex<E>> stack = new LinkedStack<>();
 		   
-		   stack.push(dst);
+		   
+		   stack.push(temp);
 		   while(temp != null)
 		   {
 			   temp = sol.get(temp);
@@ -77,12 +78,19 @@ public class Djikstra<E> extends Graph<E> {
 
 		   }
 		   System.out.println(stack.size());
+		   
 		   while(!stack.isEmpty())
 		   {
-			   sb.append(stack.pop().data);
+			   temp = stack.pop();
+			   sb.append(temp.data);
 			   if(stack.size() != 0)
-				   sb.append(" ---> ");
+			   {
+				   double cost = temp.adjList.get(stack.peek().data).second;
+				   sb.append(" --(" +cost +")--> ");
+			   }
 		   }
+		   System.out.println(temp.data);
+		   sb.append("\nTotal Cost: " +temp.distanceFromSrc);
 		   return sb.toString();
 	   }
 	   // algorithms
@@ -111,7 +119,7 @@ public class Djikstra<E> extends Graph<E> {
 				   vert.setDistanceFromSrc(Vertex.INFINITY); // else set distance for now to infinity
 		   } // end for
 
-		   vertsInGraph.remove(source.data); // removes source node from vertices in graph (basically counter-1)
+		   vertsInGraph.remove(source.data); // removes source node from vertices in graph (basically counter-1 or removing it from the set of "unvisited")
 		   if(source != null) //
 		   {
 			   while(!vertsInGraph.isEmpty()) // for all remaining vertices, do the following
