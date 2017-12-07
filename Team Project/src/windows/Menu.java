@@ -193,10 +193,11 @@ public class Menu extends JFrame{
 	   {
 		   graph = new Djikstra<String>();
 		   location_names.clear();
-		   while(s.hasNext())
+		   while(s.hasNextLine())
 		   {
 			   String arr[] = s.nextLine().split(",");
-			   //System.out.println(arr[0]+arr[1]+arr[2]);
+			   if(s.hasNextLine())
+				   s.nextLine();
 			   if (!location_names.contains(arr[0]))
 			   {
 				   location_names.add(arr[0]);
@@ -208,7 +209,6 @@ public class Menu extends JFrame{
 			   graph.addEdge(arr[0], arr[1], Double.valueOf(arr[2]));
 		   }
 		   s.close();
-		   //graph.showAdjTable();
 		   historyS = new LinkedStack<String>();historyE = new LinkedStack<String>();
 		   historyC = new LinkedStack<Double>();
 		   prevaction = new LinkedStack<Integer>();
@@ -267,7 +267,7 @@ public class Menu extends JFrame{
 	                    JOptionPane.PLAIN_MESSAGE,
 	                    null,
 	                    null,
-	                    "000.txt");
+	                    "SavedMap.txt");
 				File outfile = new File(outfilename);
 				PrintWriter pw;
 				try {
@@ -403,7 +403,7 @@ public class Menu extends JFrame{
 	                    JOptionPane.PLAIN_MESSAGE,
 	                    null,
 	                    null,
-	                    "000.txt");
+	                    "Solution.txt");
 				File outfile = new File(outfilename);
 				try {
 					PrintWriter pw = new PrintWriter(outfile);

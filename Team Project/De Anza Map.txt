@@ -1,12 +1,23 @@
 Flint Center,A building,2
+
 Flint Center,Library,4
+
 Flint Center,MLC,2
+
 A building,Campus Center,3
+
 MLC,E building,2
+
 Library,Campus Center,1
+
 Library,S building,2
+
 Campus Center,Administration,2
+
 Campus Center,FOR,2
+
 E building,S building,1
+
 S building,Administration,3
+
 Administration,FOR,1

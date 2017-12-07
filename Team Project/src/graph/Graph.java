@@ -102,14 +102,17 @@ class Vertex<E>
 		Iterator<Entry<E, Pair<Vertex<E>, Double>>> iter;
 		Entry<E, Pair<Vertex<E>, Double>> entry;
 		Pair<Vertex<E>, Double> pair;
-		String content = "";
+		//StringBuilder content = new StringBuilder("");
+		//String content = "";
 		iter = adjList.entrySet().iterator();
 		while (iter.hasNext()) {
+			StringBuilder content = new StringBuilder("");
 			entry = iter.next();
 			pair = entry.getValue();
-			content = (data + "," + pair.first.data +","+String.format("%3.1f", pair.second));
-			pw.println(content);
-			content = "";
+			content.append(data +",");
+			content.append(pair.first.data +",");
+			content.append(String.format("%3.1f", pair.second));
+			pw.println(content.toString());
 		}
 	}
 }
@@ -312,6 +315,7 @@ public class Graph<E>
 		iter = vertexSet.entrySet().iterator();
 		while (iter.hasNext()) {
 			(iter.next().getValue()).printToFile(pw);
+			pw.println();
 		}
 
 	}
