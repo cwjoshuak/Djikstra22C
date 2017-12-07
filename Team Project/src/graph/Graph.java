@@ -1,6 +1,11 @@
+package graph;
+
 import java.io.PrintWriter;
 import java.util.*;
 import java.util.Map.Entry;
+
+import linkedData.*;
+
 interface Visitor<T>
 {
     public void visit(T obj);
@@ -92,6 +97,21 @@ class Vertex<E>
       System.out.println();
    }
 
+   public void printToFile(PrintWriter pw)
+	{
+		Iterator<Entry<E, Pair<Vertex<E>, Double>>> iter;
+		Entry<E, Pair<Vertex<E>, Double>> entry;
+		Pair<Vertex<E>, Double> pair;
+		String content = "";
+		iter = adjList.entrySet().iterator();
+		while (iter.hasNext()) {
+			entry = iter.next();
+			pair = entry.getValue();
+			content = (data + "," + pair.first.data +","+String.format("%3.1f", pair.second));
+			pw.println(content);
+			content = "";
+		}
+	}
 }
 
 //--- Graph class ------------------------------------------------------
@@ -104,11 +124,6 @@ public class Graph<E>
    public Graph ()
    {
       vertexSet = new HashMap<E, Vertex<E> >();
-   }
-   public Graph(Scanner scanner)
-   {
-	   super();
-	   
    }
 
    public void addEdge(E source, E dest, double cost)
@@ -173,6 +188,15 @@ public class Graph<E>
 	   return removedOK;
    }
 
+   public boolean existsPair(E start, E end) {
+		Vertex<E> startVertex = vertexSet.get(start);
+		boolean exist = false;
+		if (startVertex != null) {
+			exist = startVertex.adjList.containsKey(end);
+		}
+		return exist;
+	}
+   
    public void showAdjTable()
    {
       Iterator<Entry<E, Vertex<E>>> iter;
@@ -218,8 +242,9 @@ public class Graph<E>
    {
 	   unvisitVertices();
 
-	   Vertex<E> startVertex = vertexSet.get(startElement);
-	   depthFirstTraversalHelper( startVertex, visitor );
+		Vertex<E> startVertex = vertexSet.get(startElement);
+		LinkedStack<Vertex<E>> vertexStack = new LinkedStack<>();
+		depthFirstTraversalHelper(startVertex, visitor, vertexStack);
    }
 
    protected void breadthFirstTraversalHelper(Vertex<E> startVertex,
@@ -252,50 +277,44 @@ public class Graph<E>
    } // end breadthFirstTraversalHelper
 
 
-   public void depthFirstTraversalHelper(Vertex<E> startVertex, Visitor<E> visitor)
+   public void depthFirstTraversalHelper(Vertex<E> startVertex, Visitor<E> visitor,
+			LinkedStack<Vertex<E>> vertexStack)
    {
         // YOU COMPLETE THIS (USE THE RECURSIVE ALGORITHM GIVEN FOR LESSON 11 EXERCISE)
-	   LinkedStack<Vertex<E>> vertexStack = new LinkedStack<>();
-	   E startData = startVertex.getData();
-	   
-	   startVertex.visit();
-	   visitor.visit(startData);
-	   vertexStack.push(startVertex);
-	   System.out.println("Visited: " + startVertex.getData().toString());
-	   
-	   Iterator<Map.Entry<E, Pair<Vertex<E>, Double>>> iter =
-			   startVertex.iterator();
-	   while (iter.hasNext() && !vertexStack.isEmpty())
-	   {
-		   Entry<E, Pair<Vertex<E>, Double>> nextEntry = iter.next();
-		   Vertex<E> neighborVertex = nextEntry.getValue().first;
-		   if( !neighborVertex.isVisited() )
-		   {
-			   depthFirstTraversalHelper(neighborVertex,visitor);
-		   }
-		   else
-		   {
-			   vertexStack.pop();
-			   return;
-		   }
-	   }
+		E startData = startVertex.getData();
+
+		startVertex.visit();
+		visitor.visit(startData);
+		vertexStack.push(startVertex);
+
+		Iterator<Map.Entry<E, Pair<Vertex<E>, Double>>> iter = startVertex.iterator();
+		while (iter.hasNext()) {
+			Entry<E, Pair<Vertex<E>, Double>> nextEntry = iter.next();
+			Vertex<E> neighborVertex = nextEntry.getValue().first;
+			if (!neighborVertex.isVisited()) {
+				depthFirstTraversalHelper(neighborVertex, visitor, vertexStack);
+			}
+		}
+		vertexStack.pop();
+		return;
    }
+   
 
 
    // WRITE THE INSTANCE METHOD HERE TO
    //         WRITE THE GRAPH's vertices and its
    //         adjacency list TO A TEXT FILE (SUGGEST TO PASS AN
    //        ALREADY OPEN PrintWriter TO THIS) !
-   public void printToFile(PrintWriter pw) {
-	   if(pw == null)
-		   return;
-	   Iterator<Entry<E,Vertex<E>>> iter = vertexSet.entrySet().iterator();
-	      while( iter.hasNext() )
-	      {
-	         (iter.next().getValue()).showAdjList();
-	      }
-	      pw.println();
-   }
+	public void printToFile(PrintWriter pw) {
+		if (pw == null)
+			return;
+		Iterator<Entry<E, Vertex<E>>> iter;
+		iter = vertexSet.entrySet().iterator();
+		while (iter.hasNext()) {
+			(iter.next().getValue()).printToFile(pw);
+		}
+
+	}
    public double getEdgeCost(E src, E dst)
    {
 	   Vertex<E> vert = vertexSet.get(src);

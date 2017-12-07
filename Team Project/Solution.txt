@@ -1,0 +1,2 @@
+UCD --(1.0)--> UCB --(2.0)--> UCSC
+Total Cost: 3.0

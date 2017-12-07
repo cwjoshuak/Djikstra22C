@@ -1,19 +1,13 @@
-/**
- *	Djikstra.java
- *	Write a description of your file here
- *	
- *	Eclipse Neon.2 Release (4.6.2), macOS Sierra
- *	Java SE 8 [1.8.0_45]
- *	@author Joshua Kuan
- *	@version 4 Dec 2017
- */
+package graph;
+
 
 import java.util.*;
 import java.util.Map.Entry;
 
+import linkedData.*;
+
 //--- Edge class ------------------------------------------------------
-// THIS CLASS DOESN'T ALLOW OUTSIDE ACCESS TO ANY Vertex (ONLY TO DISPLAY OR COMPARE)
-// REMEMBER, it's a REQUIREMENT for NO OUTSIDE ACCESS TO a Vertex!!!
+// THIS CLASS DOESN'T ALLOW OUTSIDE ACCESS TO ANY Vertex (ONLY TO DISPLAMENT for NO OUTSIDE ACCESS TO a Vertex!!!
 class Edge<E> implements Comparable< Edge<E> >
 {
 	 Vertex<E> source, dest;
@@ -51,13 +45,22 @@ public class Djikstra<E> extends Graph<E> {
 	private Map<Vertex<E>, Vertex<E>> sol = new HashMap<Vertex<E>, Vertex<E>>();
 	   public Djikstra ()
 	   {
-	      //edgeHeap = new PriorityQueue< Edge<E> >();
-		   //solution.
+		   super();
+		   sol = new HashMap<Vertex<E>,Vertex<E>>();
 	   }
-	   
+	   public void _applyDjikstra(E src)
+	   {
+		   Vertex<E> newS = new Vertex<E>(src);
+		   applyDjikstra(newS);
+	   }
 	   public void clear()
 	   {
-	     // edgeHeap.clear();
+	      sol.clear();
+	   }
+	   public String _getSolution(E dst)
+	   {
+		   Vertex<E> newD = new Vertex<E>(dst);
+		   return getSolution(newD);
 	   }
 	   public String getSolution(Vertex<E> dst)
 	   {
@@ -77,7 +80,6 @@ public class Djikstra<E> extends Graph<E> {
 			   stack.push(temp);
 
 		   }
-		   System.out.println(stack.size());
 		   
 		   while(!stack.isEmpty())
 		   {
@@ -89,13 +91,13 @@ public class Djikstra<E> extends Graph<E> {
 				   sb.append(" --(" +cost +")--> ");
 			   }
 		   }
-		   System.out.println(temp.data);
 		   sb.append("\nTotal Cost: " +temp.distanceFromSrc);
 		   return sb.toString();
 	   }
 	   // algorithms
 	   public void applyDjikstra(Vertex<E> src)
 	   {
+		   sol.clear();
 		   Vertex<E> vert; // temporary variable to hold current vertex for which the algorithm is using
 		   HashMap<E, Vertex<E>> vertsInGraph = (HashMap<E, Vertex<E>>)vertexSet.clone(); // clones Superclass' vertex set
 		   Vertex<E> source = null; // temporary variable to hold algorithm's source vertex
@@ -147,7 +149,7 @@ public class Djikstra<E> extends Graph<E> {
 			   vertsInGraph = (HashMap<E, Vertex<E>>)vertexSet.clone();
 			   
 			   
-			   System.out.println(vertsInGraph.keySet());
+			  // System.out.println(vertsInGraph.keySet());
 			   for (Iterator<Entry<E, Vertex<E>>> iter = vertsInGraph.entrySet().iterator(); iter.hasNext();)
 			   {
 				   
@@ -174,15 +176,17 @@ public class Djikstra<E> extends Graph<E> {
 					 
 			   } // end for
 			  
+			   
+			   
+			   //DEBUGGING
+			   /*
+			   
 			   Iterator<Vertex<E>> t =  sol.keySet().iterator();
 			   while(t.hasNext())
 			   {
 				   Vertex<E> v = t.next();
 				   System.out.println(v.data + " " +(sol.get(v)!=null ? sol.get(v).data : "null" )); 
 			   }
-			   
-			   
-			   //DEBUGGING
 			   vertsInGraph = (HashMap<E, Vertex<E>>)vertexSet.clone();
 			   System.out.println(vertexSet.isEmpty());
 			   for (Iterator<Entry<E, Vertex<E>>> iter = vertsInGraph.entrySet().iterator(); iter.hasNext();)
@@ -192,7 +196,7 @@ public class Djikstra<E> extends Graph<E> {
 				   System.out.print("Current: " +vert.data);
 				   
 				   System.out.println("\tdistance to source: " +vert.getDistanceFromSrc());
-			   }
+			   }*/
 		   }
       }
    }

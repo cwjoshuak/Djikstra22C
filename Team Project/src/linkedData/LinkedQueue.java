@@ -1,4 +1,4 @@
-/**   A class that implements the ADT queue by using a chain of nodes   that has both head and tail references.   @author Frank M. Carrano   @author Timothy M. Henry   @version 4.0
+package linkedData;/**   A class that implements the ADT queue by using a chain of nodes   that has both head and tail references.   @author Frank M. Carrano   @author Timothy M. Henry   @version 4.0
    UPDATED by C. Lee-Klawender
    NOTE: the LinkedQueue class includes the Node class as an inner class*/public class LinkedQueue<T> 	implements QueueInterface<T>{  private Node frontNode; // References node at front of queue  private Node backNode;  // References node at back of queue
   private int count = 0;	public LinkedQueue()	{		frontNode = null;		backNode = null;	} // end default constructor	public boolean enqueue(T newEntry)	{	// ADD CODE TO add data to linked list HERE!
