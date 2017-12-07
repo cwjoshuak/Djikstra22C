@@ -308,7 +308,6 @@ public class Graph<E>
 	      {
 	         entry = iter.next();
 	         pair = entry.getValue();
-	         System.out.println(pair.first.data);
 	         if(pair.first.data.equals(dst))
 	        	 return pair.second;
 	      }
