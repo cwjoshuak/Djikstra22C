@@ -40,10 +40,10 @@ class Edge<E> implements Comparable< Edge<E> >
 	 }
 }
 
-public class Djikstra<E> extends Graph<E> {
+public class Dijkstra<E> extends Graph<E> {
 	
 	private Map<Vertex<E>, Vertex<E>> sol = new HashMap<Vertex<E>, Vertex<E>>();
-	   public Djikstra ()
+	   public Dijkstra ()
 	   {
 		   super();
 		   sol = new HashMap<Vertex<E>,Vertex<E>>();

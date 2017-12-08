@@ -12,7 +12,7 @@ import linkedData.*;
 import graph.*;
 
 public class Menu extends JFrame{
-	Djikstra<String> graph = null;
+	Dijkstra<String> graph = null;
 	LinkedStack<String> historyS,historyE;
 	LinkedStack<Double> historyC;
 	LinkedStack<Integer> prevaction; //1 for add route and 2 for remove route 0 for no action performed
@@ -136,7 +136,7 @@ public class Menu extends JFrame{
 			scroll = new JScrollPane(texts);
 			console = new MessageConsole(texts);
 			console.redirectOut();
-			console.redirectErr(Color.RED,null);
+			//console.redirectErr(Color.RED,null);
 			console.setMessageLines(100);
 			
 			displayP.setBounds(0, 360, 500, 280);
@@ -191,13 +191,19 @@ public class Menu extends JFrame{
 			   return;
 	   else
 	   {
-		   graph = new Djikstra<String>();
+		   graph = new Dijkstra<String>();
 		   location_names.clear();
 		   while(s.hasNextLine())
 		   {
-			   String arr[] = s.nextLine().split(",");
-			   if(s.hasNextLine())
-				   s.nextLine();
+			   String buffer = s.nextLine();
+			   String arr[] = new String[3];
+			   if(buffer.isEmpty() && s.hasNextLine())
+				   buffer = s.nextLine();
+			   
+			   if(!buffer.isEmpty())
+				   arr = buffer.split(",");
+			   else break;
+			   
 			   if (!location_names.contains(arr[0]))
 			   {
 				   location_names.add(arr[0]);
@@ -207,6 +213,7 @@ public class Menu extends JFrame{
 				   location_names.add(arr[1]);
 			   }
 			   graph.addEdge(arr[0], arr[1], Double.valueOf(arr[2]));
+			   System.out.println(s.hasNextLine());
 		   }
 		   s.close();
 		   historyS = new LinkedStack<String>();historyE = new LinkedStack<String>();
@@ -222,6 +229,11 @@ public class Menu extends JFrame{
 		   save_graph.setVisible(true);
 		   start_location.setSelectedItem(location_names.elementAt(0));
 		   end_location.setSelectedItem(location_names.elementAt(0));
+		   reset_history(historyS);
+			reset_history(historyC);
+			reset_history(historyE);
+			reset_history(prevaction);
+			undo.setEnabled(false);
 		   stats.setText("Read!");
 	   }
 	}
@@ -234,11 +246,7 @@ public class Menu extends JFrame{
 				String infilename = filename.getText();
 				Scanner infile = openInputFile(infilename);
 				readFromFile(infile);
-				reset_history(historyS);
-				reset_history(historyC);
-				reset_history(historyE);
-				reset_history(prevaction);
-				undo.setEnabled(false);
+				
 			}
 			else if (b.getActionCommand().equals("Breadth First"))	
 			{
@@ -322,7 +330,7 @@ public class Menu extends JFrame{
 				String sartLocation = (String)start_location.getSelectedItem();
 				String endLocation = (String)end_location.getSelectedItem();
 				
-				if (!(sartLocation.equals(endLocation)))
+				if (!(sartLocation.equals(endLocation)) && time_cost > 0)
 				{
 					if (!graph.existsPair(sartLocation, endLocation))
 					{
@@ -340,7 +348,15 @@ public class Menu extends JFrame{
 						results.setText("Unable to add route! Start & End pos pair already exists!");
 				}
 				else
-					results.setText("Unable to add route! error in Start/End pos");
+				{
+					String err = "";
+					if (sartLocation.equals(endLocation))
+						err = "Unable to add route! error in Start/End pos! ";
+					if (time_cost <= 0)
+						err += "Positive cost value only!";
+					
+					results.setText(err);
+				}
 			}
 			else if (b.getActionCommand().equals("Remove a route"))
 			{
