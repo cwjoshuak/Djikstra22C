@@ -20,13 +20,15 @@ class Vertex<E>
    public HashMap<E, Pair<Vertex<E>, Double> > adjList = new HashMap<E, Pair<Vertex<E>, Double> >();
    public E data;
    public boolean visited;
-   public double distanceFromSrc;
+   public double distanceFromSrc; // holds double value of distance of "this" vertex from given source vertex
    
    
+   /* Returns distance from source */
    public double getDistanceFromSrc()
    {
 	   return distanceFromSrc;
    }
+   /* Sets distance from source */
    public void setDistanceFromSrc(double d)
    {
 	   distanceFromSrc = d;
@@ -97,13 +99,13 @@ class Vertex<E>
       System.out.println();
    }
 
+   /* Jue Luo
+    * helper function which prints vertex adj list to file */
    public void printToFile(PrintWriter pw)
 	{
 		Iterator<Entry<E, Pair<Vertex<E>, Double>>> iter;
 		Entry<E, Pair<Vertex<E>, Double>> entry;
 		Pair<Vertex<E>, Double> pair;
-		//StringBuilder content = new StringBuilder("");
-		//String content = "";
 		iter = adjList.entrySet().iterator();
 		while (iter.hasNext()) {
 			StringBuilder content = new StringBuilder("");
@@ -280,6 +282,8 @@ public class Graph<E>
    } // end breadthFirstTraversalHelper
 
 
+   /* ShuWen Zhu
+    * Depth-first traversal from the parameter startElement */
    public void depthFirstTraversalHelper(Vertex<E> startVertex, Visitor<E> visitor,
 			LinkedStack<Vertex<E>> vertexStack)
    {
@@ -302,12 +306,8 @@ public class Graph<E>
 		return;
    }
    
-
-
-   // WRITE THE INSTANCE METHOD HERE TO
-   //         WRITE THE GRAPH's vertices and its
-   //         adjacency list TO A TEXT FILE (SUGGEST TO PASS AN
-   //        ALREADY OPEN PrintWriter TO THIS) !
+   /* Jue Luo
+    * Writes the Graph Vertices and adj list to a text file*/
 	public void printToFile(PrintWriter pw) {
 		if (pw == null)
 			return;
@@ -317,8 +317,9 @@ public class Graph<E>
 			(iter.next().getValue()).printToFile(pw);
 			pw.println();
 		}
-
 	}
+	/* ShuWen Zhu
+	 * returns edge cost between two (vertex) points */
    public double getEdgeCost(E src, E dst)
    {
 	   Vertex<E> vert = vertexSet.get(src);

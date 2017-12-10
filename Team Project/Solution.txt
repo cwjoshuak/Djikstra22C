@@ -1,2 +1,0 @@
-UCB --(1.0)--> UCD --(6.0)--> UCLA
-Total Cost: 7.0

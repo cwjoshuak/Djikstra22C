@@ -1,9 +1,7 @@
 package graph;
 
-
 import java.util.*;
 import java.util.Map.Entry;
-
 import linkedData.*;
 
 //--- Edge class ------------------------------------------------------
@@ -38,38 +36,54 @@ class Edge<E> implements Comparable< Edge<E> >
 	 {
 	    return (cost < rhs.cost? -1 : cost > rhs.cost? 1 : 0);
 	 }
-}
+} // end Edge class
+
 
 public class Dijkstra<E> extends Graph<E> {
 	
-	private Map<Vertex<E>, Vertex<E>> sol = new HashMap<Vertex<E>, Vertex<E>>();
+	private Map<Vertex<E>, Vertex<E>> sol = new HashMap<Vertex<E>, Vertex<E>>(); // holds solution from src to any dst 
+	// contains start -> end vertex in K,V pair, K:src V:null
+	
 	   public Dijkstra ()
 	   {
 		   super();
 		   sol = new HashMap<Vertex<E>,Vertex<E>>();
 	   }
-	   public void _applyDjikstra(E src)
+	   
+	   /* ShuWen Zhu
+	    * Method call will apply Dijkstra's algorithm and save solutions to sol
+	    */
+	   public void _applyDijkstra(E src)
 	   {
 		   Vertex<E> newS = new Vertex<E>(src);
-		   applyDjikstra(newS);
+		   applyDijkstra(newS);
 	   }
 	   public void clear()
 	   {
 	      sol.clear();
 	   }
+	   
+	   /* @author ShuWen Zhu
+	    * Helper method for Menu
+	    */
 	   public String _getSolution(E dst)
 	   {
 		   Vertex<E> newD = new Vertex<E>(dst);
 		   return getSolution(newD);
 	   }
+	   
+	   /* Joshua Kuan
+	    * returns solution for a particular destination
+	    * PRE-REQUISITE: SHOULD HAVE CALLED applyDijkstra(Vertex<E> src) FIRST
+	    */
 	   public String getSolution(Vertex<E> dst)
 	   {
 		   StringBuilder sb = new StringBuilder("");
 		   if(dst == null)
 			   return sb.toString();
+		   
 		   Vertex<E> temp = vertexSet.get(dst.data);
 		   LinkedStack<Vertex<E>> stack = new LinkedStack<>();
-		   
 		   
 		   stack.push(temp);
 		   while(temp != null)
@@ -78,7 +92,6 @@ public class Dijkstra<E> extends Graph<E> {
 			   if(temp== null)
 				   break;
 			   stack.push(temp);
-
 		   }
 		   
 		   while(!stack.isEmpty())
@@ -94,10 +107,13 @@ public class Dijkstra<E> extends Graph<E> {
 		   sb.append("\nTotal Cost: " +temp.distanceFromSrc);
 		   return sb.toString();
 	   }
-	   // algorithms
-	   public void applyDjikstra(Vertex<E> src)
+	   
+	   /* Joshua Kuan
+	    * applies Dijkstra's algorithm on graph starting from given source vertex
+	    */
+	   public void applyDijkstra(Vertex<E> src)
 	   {
-		   sol.clear();
+		   sol.clear(); // clears solution map
 		   Vertex<E> vert; // temporary variable to hold current vertex for which the algorithm is using
 		   HashMap<E, Vertex<E>> vertsInGraph = (HashMap<E, Vertex<E>>)vertexSet.clone(); // clones Superclass' vertex set
 		   Vertex<E> source = null; // temporary variable to hold algorithm's source vertex
@@ -147,19 +163,11 @@ public class Dijkstra<E> extends Graph<E> {
     		   }
 			   
 			   vertsInGraph = (HashMap<E, Vertex<E>>)vertexSet.clone();
-			   
-			   
-			  // System.out.println(vertsInGraph.keySet());
 			   for (Iterator<Entry<E, Vertex<E>>> iter = vertsInGraph.entrySet().iterator(); iter.hasNext();)
 			   {
-				   
 				   vert = iter.next().getValue(); // grabs vertex
-				   
-				   
 				   if(vert.distanceFromSrc == 0) // if grabbed vertex is source
-				   {
 					   sol.put(vert, null);
-				   }
 				   else
 				   {
 					   Vertex<E> lowest = null;
@@ -172,32 +180,9 @@ public class Dijkstra<E> extends Graph<E> {
 							   lowest = holder.getValue().first;
 					   }
 						   sol.put(vert, lowest);
-				   }
-					 
+				   } // end if-else
 			   } // end for
-			  
-			   
-			   
-			   //DEBUGGING
-			   /*
-			   
-			   Iterator<Vertex<E>> t =  sol.keySet().iterator();
-			   while(t.hasNext())
-			   {
-				   Vertex<E> v = t.next();
-				   System.out.println(v.data + " " +(sol.get(v)!=null ? sol.get(v).data : "null" )); 
-			   }
-			   vertsInGraph = (HashMap<E, Vertex<E>>)vertexSet.clone();
-			   System.out.println(vertexSet.isEmpty());
-			   for (Iterator<Entry<E, Vertex<E>>> iter = vertsInGraph.entrySet().iterator(); iter.hasNext();)
-			   {
-				   vert = iter.next().getValue(); // grabs vertex
-				   
-				   System.out.print("Current: " +vert.data);
-				   
-				   System.out.println("\tdistance to source: " +vert.getDistanceFromSrc());
-			   }*/
 		   }
-      }
-   }
+      }// end method
+   } // end class
 	   

@@ -1,5 +1,6 @@
 package windows;
 
+/* @author ShuWen Zhu */
 import javax.swing.*;
 
 import java.awt.Color;
@@ -27,10 +28,12 @@ public class Menu extends JFrame{
 	JScrollPane scroll;
 	MessageConsole console;
 	public Menu() {
+		//window setup
 		setTitle("Welcome!");
-		setSize(500,700);
+		setSize(500,800);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+		// panel 1
 		{
 			//Objects for input file read
 			submit_file = new JButton("Open");
@@ -49,9 +52,9 @@ public class Menu extends JFrame{
 			deepF = new JButton("Depth First");
 			adjL = new JButton("Adj List");
 			
-			breathF.setBounds(40,90, 110, 30);
-			deepF.setBounds(160,90, 110, 30);
-			adjL.setBounds(280,90, 110, 30);
+			breathF.setBounds(40,100, 110, 30);
+			deepF.setBounds(180,100, 110, 30);
+			adjL.setBounds(320,100, 110, 30);
 			
 			breathF.setEnabled(false);
 			deepF.setEnabled(false);
@@ -77,14 +80,15 @@ public class Menu extends JFrame{
 			msgP.add(save_graph);
 		}
 		
+		// panel 2
 		{
 			//objects for vertex panel
 			location_names.add(" ");
 			cost = new JTextField("Edge Cost");
 			vertexP = new JPanel();
-			vertxmsg = new JLabel("  Start point:                                               End point:");
-			start_location = new JComboBox(location_names);
-			end_location = new JComboBox(location_names);
+			vertxmsg = new JLabel("Start point:                                                            End point:");
+			start_location = new JComboBox<String>(location_names);
+			end_location = new JComboBox<String>(location_names);
 			search_route = new JButton("Search!");
 			add_edge = new JButton("Add a route");
 			remove_edge = new JButton("Remove a route");
@@ -101,13 +105,14 @@ public class Menu extends JFrame{
 			
 			vertxmsg.setBounds(40, 0, 400, 30);
 			start_location.setBounds(40,50,150,30);
-			end_location.setBounds(240,50,150,30);
-			search_route.setBounds(310, 100, 80, 30);
+			end_location.setBounds(280,50,150,30);
+			search_route.setBounds(350, 100, 80, 30);
 			add_edge.setBounds(40, 140, 100, 30);
-			remove_edge.setBounds(150, 140, 150, 30);
-			undo.setBounds(310, 140, 80, 30);
+			remove_edge.setBounds(170, 140, 150, 30);
+			undo.setBounds(350, 140, 80, 30);
 			cost.setBounds(40, 100, 80, 30);
-			save_route.setBounds(290,180,150,30);
+			save_route.setBounds(290,180,140,30);
+			
 			cost.setEnabled(false);
 			search_route.setEnabled(false);
 			add_edge.setEnabled(false);
@@ -116,7 +121,7 @@ public class Menu extends JFrame{
 			save_route.setEnabled(false);
 			
 			//Panel set for vertex
-			vertexP.setBounds(0, 150, 500, 230);
+			vertexP.setBounds(0, 150, 500, 220);
 			vertexP.add(vertxmsg);
 			vertexP.add(start_location);
 			vertexP.add(end_location);
@@ -136,12 +141,12 @@ public class Menu extends JFrame{
 			scroll = new JScrollPane(texts);
 			console = new MessageConsole(texts);
 			console.redirectOut();
-			//console.redirectErr(Color.RED,null);
+			console.redirectErr(Color.RED,null);
 			console.setMessageLines(100);
 			
-			displayP.setBounds(0, 360, 500, 280);
-			results.setBounds(30, 0, 440, 60);
-			scroll.setBounds(30, 70, 400, 200);
+			displayP.setBounds(0, 360, 500, 300);
+			results.setBounds(30, 0, 400, 95);
+			scroll.setBounds(30, 100, 400, 200);
 			
 			displayP.add(results);
 			displayP.add(scroll);
@@ -213,7 +218,6 @@ public class Menu extends JFrame{
 				   location_names.add(arr[1]);
 			   }
 			   graph.addEdge(arr[0], arr[1], Double.valueOf(arr[2]));
-			   System.out.println(s.hasNextLine());
 		   }
 		   s.close();
 		   historyS = new LinkedStack<String>();historyE = new LinkedStack<String>();
@@ -246,7 +250,6 @@ public class Menu extends JFrame{
 				String infilename = filename.getText();
 				Scanner infile = openInputFile(infilename);
 				readFromFile(infile);
-				
 			}
 			else if (b.getActionCommand().equals("Breadth First"))	
 			{
@@ -291,7 +294,7 @@ public class Menu extends JFrame{
 			}
 		}
 	}
-
+	//listener for vertexP
 	class p2Listener implements ActionListener {
 		public void actionPerformed(ActionEvent b)	
 		{
@@ -301,7 +304,7 @@ public class Menu extends JFrame{
 				String endLocation = (String)end_location.getSelectedItem();
 				if (!(sartLocation.equals(endLocation)))
 				{
-					graph._applyDjikstra(sartLocation);
+					graph._applyDijkstra(sartLocation);
 					solution = graph._getSolution(endLocation);
 					results.setText( 
 							"<html><pre>Looking for path between "+sartLocation+
@@ -436,12 +439,6 @@ public class Menu extends JFrame{
 		}
 	}
 
-	/*class b3Listener implements ActionListener {
-		public void actionPerformed(ActionEvent b)	
-		{
-			p1.setBackground(Color.YELLOW);
-		}
-	} */
 
 	class MouseAction implements MouseListener
 	{
