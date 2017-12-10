@@ -190,6 +190,7 @@ public class Menu extends JFrame{
     	return scanner;
 	}
 	
+	// read from input file
 	public void readFromFile(Scanner s)
 	{
 		if(s == null)
@@ -278,19 +279,26 @@ public class Menu extends JFrame{
 	                    JOptionPane.PLAIN_MESSAGE,
 	                    null,
 	                    null,
-	                    "SavedMap.txt");
-				File outfile = new File(outfilename);
-				PrintWriter pw;
-				try {
-					pw = new PrintWriter(outfile);
-					graph.printToFile(pw);
-					pw.close();
-					JOptionPane.showMessageDialog(msgP,
-						    "Saved!");
-				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+	                    "SavedMap.txt") + "";
+				if (outfilename.equals(null + ""))
+					return;
+				if(!outfilename.equals("" + "") ) 
+				{
+					File outfile = new File(outfilename);
+					PrintWriter pw;
+					try {
+						pw = new PrintWriter(outfile);
+						graph.printToFile(pw);
+						pw.close();
+						JOptionPane.showMessageDialog(msgP,
+							    "Saved!");
+					} catch (FileNotFoundException e) {
+						e.printStackTrace();
+					}
 				}
+				else
+					JOptionPane.showMessageDialog(msgP,
+					    "Invalid filename!");
 			}
 		}
 	}
@@ -306,9 +314,9 @@ public class Menu extends JFrame{
 				{
 					graph._applyDijkstra(sartLocation);
 					solution = graph._getSolution(endLocation);
-					results.setText( 
-							"<html><pre>Looking for path between "+sartLocation+
-							" and "+ endLocation +"</pre>"+ "<pre>" +solution +"</pre>" +"</html>");
+					results.setText("<html><pre>Looking for path between "+sartLocation+
+							" and "+ endLocation +"</pre><html>" + 
+							String.format("<html><div style=\"width:%dpx;\">%s</div><html>", 290, solution));
 					save_route.setEnabled(true);
 				}
 				else
@@ -422,18 +430,25 @@ public class Menu extends JFrame{
 	                    JOptionPane.PLAIN_MESSAGE,
 	                    null,
 	                    null,
-	                    "Solution.txt");
-				File outfile = new File(outfilename);
-				try {
-					PrintWriter pw = new PrintWriter(outfile);
-					pw.println(solution);
-					pw.close();
-					JOptionPane.showMessageDialog(vertexP,
-						    "Saved!");
-				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+	                    "Solution.txt") + "";
+				if (outfilename.equals(null + ""))
+					return;
+				if(!outfilename.equals("" + "") ) 
+				{
+					File outfile = new File(outfilename);
+					try {
+						PrintWriter pw = new PrintWriter(outfile);
+						pw.println(solution);
+						pw.close();
+						JOptionPane.showMessageDialog(vertexP,
+							    "Saved!");
+					} catch (FileNotFoundException e) {
+						e.printStackTrace();
+					}
 				}
+				else
+					JOptionPane.showMessageDialog(msgP,
+					    "Invalid filename!");
 				
 			}
 		}
@@ -462,28 +477,22 @@ public class Menu extends JFrame{
 
 		@Override
 		public void mouseEntered(MouseEvent arg0) {
-			// TODO Auto-generated method stub
 			
 		}
 
 		@Override
 		public void mouseExited(MouseEvent arg0) {
-			// TODO Auto-generated method stub
 			
 		}
 
 		@Override
 		public void mousePressed(MouseEvent arg0) {
-			// TODO Auto-generated method stub
 			
 		}
 
 		@Override
 		public void mouseReleased(MouseEvent arg0) {
-			// TODO Auto-generated method stub
 			
 		}
-		
 	}
-
 }
