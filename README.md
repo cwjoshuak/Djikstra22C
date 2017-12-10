@@ -1,10 +1,14 @@
 # Djikstra22C
-<<<<<<< HEAD
+How It Works
 =======
 
 
-Your menues are missing the add edge, remove edge, undo remove, 
-display graph submenu (BFS, DFS or adjacency list), saving graph to a file 
-and saving the solution to a file. And because you shouldn't have access to the graph data 
-outside of the Graph classes, you should have an undo Stack inside of the Graph or Dijkstra subclass.
->>>>>>> 4b911569932eeb41aa3f9cd4321e3ac0c03d9f6c
+Compile and run. Program demonstrates Dijkstra's Algorithm.
+
+Test input files are "uc.txt" and "da.txt"
+There are pictures which show respectively what uc and da maps/graphs should look like when drawn out.
+
+> You can also load a map from SavedSolution
+> Offers Breadth/Depth-first traversal display and Adjacency List display
+
+Program is work of Jue Luo, ShuWen Zhu and Joshua Kuan from CIS 22C De Anza College, Fall 2017.
